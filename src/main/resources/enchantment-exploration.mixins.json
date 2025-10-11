@@ -1,0 +1,16 @@
+{
+	"required": true,
+	"package": "net.falsetm.mixin",
+	"compatibilityLevel": "JAVA_21",
+	"mixins": [
+		"EnchantmentScreenHandlerMixin",
+		"EnchantingTableBlockMixin",
+		"EnchantmentScreenHandlerAccessor"
+	],
+	"injectors": {
+		"defaultRequire": 1
+	},
+	"overwrites": {
+		"requireAnnotations": true
+	}
+}
