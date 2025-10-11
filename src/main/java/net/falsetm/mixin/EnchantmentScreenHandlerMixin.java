@@ -2,6 +2,7 @@ package net.falsetm.mixin;
 
 import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
 import com.llamalad7.mixinextras.injector.wrapoperation.WrapOperation;
+import net.falsetm.events.EnchantmentScreenHandlerApplyCostCallback;
 import net.falsetm.events.GenerateEnchantCallback;
 import net.falsetm.events.EnchantmentContentChangedCallback;
 import net.falsetm.mixin_ducks.EnchantmentHandlerDuck;
@@ -12,11 +13,14 @@ import net.minecraft.screen.EnchantmentScreenHandler;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
+import org.jetbrains.annotations.Nullable;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
+import org.spongepowered.asm.mixin.injection.ModifyArgs;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
+import org.spongepowered.asm.mixin.injection.invoke.arg.Args;
 
 import java.util.List;
 
@@ -51,5 +55,13 @@ public class EnchantmentScreenHandlerMixin implements EnchantmentHandlerDuck {
             return result;
         }
         return original.call(instance, registryManager, stack, slot, level);
+    }
+
+    @ModifyArgs(method = "method_17410", at= @At(value = "INVOKE", target = "Lnet/minecraft/entity/player/PlayerEntity;applyEnchantmentCosts(Lnet/minecraft/item/ItemStack;I)V"))
+    public void falsetm$modifyApplyEnchantmentCost(Args args){
+        @Nullable Integer output = EnchantmentScreenHandlerApplyCostCallback.EVENT.invoker().applyCost((EnchantmentScreenHandler) ((Object)this), args.get(0), args.get(1));
+        if(output != null){
+            args.set(1, output);
+        }
     }
 }

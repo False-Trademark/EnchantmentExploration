@@ -20,6 +20,9 @@ public class EnchantmentExplorationConfig {
     public static final Gson GSON = new GsonBuilder().setPrettyPrinting().create();
 
     public boolean enabled = true;
+    public int cost0 = 10;
+    public int cost1 = 10;
+    public int cost2 = 10;
 
     public void setEnabled(boolean enabled){
         this.enabled = enabled;
@@ -27,6 +30,30 @@ public class EnchantmentExplorationConfig {
 
     public boolean isEnabled(){
         return enabled;
+    }
+
+    public void setCost0(int newCost){
+        cost0 = newCost;
+    }
+
+    public int getCost0(){
+        return cost0;
+    }
+
+    public void setCost1(int newCost){
+        cost1 = newCost;
+    }
+
+    public int getCost1(){
+        return cost1;
+    }
+
+    public void setCost2(int newCost){
+        cost2 = newCost;
+    }
+
+    public int getCost2(){
+        return cost2;
     }
 
     public String toJson() {

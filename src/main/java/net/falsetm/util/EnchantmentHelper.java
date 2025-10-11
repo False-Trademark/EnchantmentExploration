@@ -1,4 +1,4 @@
-package net.falsetm;
+package net.falsetm.util;
 
 import net.minecraft.enchantment.EnchantmentLevelEntry;
 import net.minecraft.item.ItemStack;

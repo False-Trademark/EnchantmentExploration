@@ -3,11 +3,13 @@ package net.falsetm;
 import net.fabricmc.api.ModInitializer;
 
 import net.falsetm.config.EnchantmentExplorationConfig;
+import net.falsetm.events.EnchantmentScreenHandlerApplyCostCallback;
 import net.falsetm.events.GenerateEnchantCallback;
-import net.falsetm.events.isAccessPowerProviderCallback;
+import net.falsetm.events.IsAccessPowerProviderCallback;
 import net.falsetm.events.EnchantmentContentChangedCallback;
 import net.falsetm.mixin.EnchantmentScreenHandlerAccessor;
 import net.falsetm.mixin_ducks.EnchantmentHandlerDuck;
+import net.falsetm.util.EnchantmentHelper;
 import net.minecraft.block.Blocks;
 import net.minecraft.block.EnchantingTableBlock;
 import net.minecraft.block.entity.BlockEntityType;
@@ -61,7 +63,7 @@ public class EnchantmentExploration implements ModInitializer {
 		loadConfig();
 
 		//makes the enchantment power provider chiseled bookshelves, on toggle
-		isAccessPowerProviderCallback.EVENT.register((state, key) -> {
+		IsAccessPowerProviderCallback.EVENT.register((state, key) -> {
 			if(config.isEnabled()){
                 return state.getBlock() == Blocks.CHISELED_BOOKSHELF;
             }
@@ -102,7 +104,7 @@ public class EnchantmentExploration implements ModInitializer {
 				for(var entry : enchantmentLevelMap.entrySet()){
 					possibleEnchants.add(new EnchantmentLevelEntry(entry.getKey(), entry.getValue()));
 				}
-				possibleEnchants = net.falsetm.EnchantmentHelper.legalEnchantments(stack, possibleEnchants);
+				possibleEnchants = EnchantmentHelper.legalEnchantments(stack, possibleEnchants);
 
 				((EnchantmentHandlerDuck)receiver).falsetm$SetPossibleEnchants(possibleEnchants);
 
@@ -116,7 +118,7 @@ public class EnchantmentExploration implements ModInitializer {
 					EnchantmentLevelEntry selected = possibleEnchants.get(random.nextInt(possibleEnchants.size()));
 
 					//set the enchantment. Edit this to make it use text for display
-					receiver.enchantmentPower[0] = 10;
+					receiver.enchantmentPower[0] = config.getCost0();
 					receiver.enchantmentId[0] = indexedIterable.getRawId(selected.enchantment);
 					receiver.enchantmentLevel[0] = selected.level;
 
@@ -130,10 +132,10 @@ public class EnchantmentExploration implements ModInitializer {
 					if(all.isPresent()){
 						allRealID = indexedIterable.getRawId(all.get());
 					}
-					receiver.enchantmentPower[1] = 10;
+					receiver.enchantmentPower[1] = config.getCost1();
 					receiver.enchantmentId[1] = mixerRealID;
 					receiver.enchantmentLevel[1] = 1;
-					receiver.enchantmentPower[2] = 10;
+					receiver.enchantmentPower[2] = config.getCost2();
 					receiver.enchantmentId[2] = allRealID;
 					receiver.enchantmentLevel[2] = 1;
 
@@ -230,6 +232,16 @@ public class EnchantmentExploration implements ModInitializer {
 				return returnEnchants;
 			}
 			return null;
+		});
+
+		EnchantmentScreenHandlerApplyCostCallback.EVENT.register((receiver, itemStack, inputLevels) -> {
+			if(config.isEnabled()){
+				int selected = inputLevels-1;
+				if(selected < receiver.enchantmentPower.length){
+					return receiver.enchantmentPower[selected];
+				}
+			}
+			return inputLevels;
 		});
 	}
 

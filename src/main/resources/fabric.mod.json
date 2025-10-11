@@ -17,6 +17,9 @@
 	"entrypoints": {
 		"main": [
           "net.falsetm.EnchantmentExploration"
+		],
+		"modmenu": [
+			"net.falsetm.ModMenuIntegration"
 		]
 	},
 	"mixins": [
