@@ -104,13 +104,8 @@ public class EnchantmentExploration implements ModInitializer {
 				for(var entry : enchantmentLevelMap.entrySet()){
 					possibleEnchants.add(new EnchantmentLevelEntry(entry.getKey(), entry.getValue()));
 				}
-				for(var enc: possibleEnchants){
-					LOGGER.info("Bookshelf Enchant: {}", enc.enchantment.getIdAsString());
-				}
 				possibleEnchants = net.falsetm.EnchantmentHelper.legalEnchantments(stack, possibleEnchants);
-				for(var enc: possibleEnchants){
-					LOGGER.info("Legal Enchants: {}", enc.enchantment.getIdAsString());
-				}
+
 				((EnchantmentHandlerDuck)receiver).falsetm$SetPossibleEnchants(possibleEnchants);
 
 				if(!possibleEnchants.isEmpty()){
@@ -143,8 +138,6 @@ public class EnchantmentExploration implements ModInitializer {
 					receiver.enchantmentPower[2] = 10;
 					receiver.enchantmentId[2] = allRealID;
 					receiver.enchantmentLevel[2] = 1;
-
-					LOGGER.info("enc[0]: {}, id: {}, level: {}", selected.enchantment.getIdAsString(), receiver.enchantmentId[0], receiver.enchantmentLevel[0]);
 
 					receiver.sendContentUpdates();
 				}
@@ -189,6 +182,32 @@ public class EnchantmentExploration implements ModInitializer {
 							}
 						}
 					}
+					//middle slot (MIXED UP)
+					else if(slot == 1){
+						int originalSize = possibleEnchants.size();
+						for(int i = 0; i < originalSize; i++) {
+							int randomIndex = random.nextInt(possibleEnchants.size());
+							EnchantmentLevelEntry entry = possibleEnchants.get(randomIndex);
+							possibleEnchants.remove(randomIndex);
+
+							boolean compatibleWithAll = net.minecraft.enchantment.EnchantmentHelper.isCompatible(returnEnchants.stream().map(e->e.enchantment).collect(Collectors.toList()), entry.enchantment);
+
+							if(compatibleWithAll){
+								int roll = random.nextInt(2);
+								if(returnEnchants.isEmpty() || roll == 0){
+									int curLevel = entry.level;
+
+									if(curLevel > 1){
+										roll = random.nextInt(5);
+										if(roll < 2){
+											curLevel--;
+										}
+									}
+									returnEnchants.add(new EnchantmentLevelEntry(entry.enchantment, curLevel));
+								}
+							}
+						}
+					}
 					//bottom slot (ALL ENCHANTS LOWER LEVEL)
 					else{
 						int originalSize = possibleEnchants.size();
@@ -198,7 +217,6 @@ public class EnchantmentExploration implements ModInitializer {
 							possibleEnchants.remove(randomIndex);
 
 							boolean compatibleWithAll = net.minecraft.enchantment.EnchantmentHelper.isCompatible(returnEnchants.stream().map(e->e.enchantment).collect(Collectors.toList()), entry.enchantment);
-							LOGGER.info("enchantment: {}, compatible: {}", entry.enchantment.getIdAsString(), compatibleWithAll);
 							if(compatibleWithAll){
 								int curLevel = entry.level;
 								if(curLevel > 1){
