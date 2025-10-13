@@ -3,15 +3,19 @@
 	"id": "enchantment-exploration",
 	"version": "${version}",
 	"name": "Enchantment Exploration",
-	"description": "This is an example description! Tell everyone what your mod is about!",
+	"description": "A mod which rebalances the enchantment table to use enchanted books chiseled bookshelves for their enchantments. Part of the difficult craft modpack.",
 	"authors": [
-		"Me!"
+		"Da0neDatGotAway"
+	],
+	"contributors": [
+		"yo314159at",
+		"soulkmast3r",
+		"ReinMaxxing",
+		"Free_Lion"
 	],
 	"contact": {
-		"homepage": "https://fabricmc.net/",
-		"sources": "https://github.com/FabricMC/fabric-example-mod"
+		"sources": "https://github.com/False-Trademark"
 	},
-	"license": "CC0-1.0",
 	"icon": "assets/enchantment-exploration/icon.png",
 	"environment": "*",
 	"entrypoints": {
@@ -32,6 +36,7 @@
 		"fabric-api": "*"
 	},
 	"suggests": {
-		"another-mod": "*"
+		"modmenu": "*",
+		"cloth-config": "*"
 	}
 }
