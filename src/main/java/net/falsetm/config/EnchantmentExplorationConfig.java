@@ -23,7 +23,8 @@ public class EnchantmentExplorationConfig {
     public int cost0 = 10;
     public int cost1 = 10;
     public int cost2 = 10;
-    public boolean toolAnvilCombination = false;
+    public boolean removeToolAnvilCombination = true;
+    public boolean removeBookAnvilCombination = true;
 
     public void setEnabled(boolean enabled){
         this.enabled = enabled;
@@ -57,12 +58,20 @@ public class EnchantmentExplorationConfig {
         return cost2;
     }
 
-    public void setAnvilCombination(boolean toolAnvilCombination){
-        this.toolAnvilCombination = toolAnvilCombination;
+    public void setRemoveToolAnvilCombination(boolean removeToolAnvilCombination){
+        this.removeToolAnvilCombination = removeToolAnvilCombination;
     }
 
-    public boolean shouldAnvilCombination(){
-        return toolAnvilCombination;
+    public boolean shouldRemoveToolAnvilCombination(){
+        return removeToolAnvilCombination;
+    }
+
+    public void setRemoveBookAnvilCombination(boolean removeBookAnvilCombination){
+        this.removeBookAnvilCombination = removeBookAnvilCombination;
+    }
+
+    public boolean shouldRemoveBookAnvilCombination(){
+        return removeBookAnvilCombination;
     }
 
     public String toJson() {

@@ -243,9 +243,11 @@ public class EnchantmentExploration implements ModInitializer {
 		});
 
 		AnvilScreenHandlerUpdateResultCallback.EVENT.register((receiver -> {
-			if(config.isEnabled() && config.shouldAnvilCombination()){
+			if(config.isEnabled()){
 				ItemStack stack = receiver.getSlot(AnvilScreenHandler.INPUT_2_ID).getStack();
-				if(stack.isDamageable() || stack.getItem().equals(Items.ENCHANTED_BOOK)){
+				if((stack.isDamageable() && config.shouldRemoveToolAnvilCombination()) || (stack.getItem().equals(Items.ENCHANTED_BOOK) && config.shouldRemoveBookAnvilCombination())){
+					receiver.setStackInSlot(AnvilScreenHandler.OUTPUT_ID, receiver.nextRevision(), ItemStack.EMPTY);
+					//receiver.levelCost.set(0);
 					return ActionResult.FAIL;
 				}
 			}

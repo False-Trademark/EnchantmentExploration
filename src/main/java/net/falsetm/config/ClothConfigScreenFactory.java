@@ -41,10 +41,15 @@ public class ClothConfigScreenFactory {
                 .setSaveConsumer(newValue -> EnchantmentExploration.getConfig().setCost2(newValue))
                 .build());
 
-        anvil.addEntry(entryBuilder.startBooleanToggle(Text.translatable("option.enchantment-exploration.anvil.enabled"), EnchantmentExploration.getConfig().shouldAnvilCombination())
-                .setDefaultValue(defaultConfig.shouldAnvilCombination())
-                .setTooltip(Text.translatable("tooltip.enchantment-exploration.anvil.enabled"))
-                .setSaveConsumer(newValue -> EnchantmentExploration.getConfig().setAnvilCombination(newValue))
+        anvil.addEntry(entryBuilder.startBooleanToggle(Text.translatable("option.enchantment-exploration.anvil.tool.enabled"), EnchantmentExploration.getConfig().shouldRemoveToolAnvilCombination())
+                .setDefaultValue(defaultConfig.shouldRemoveToolAnvilCombination())
+                .setTooltip(Text.translatable("tooltip.enchantment-exploration.anvil.tool.enabled"))
+                .setSaveConsumer(newValue -> EnchantmentExploration.getConfig().setRemoveToolAnvilCombination(newValue))
+                .build());
+        anvil.addEntry(entryBuilder.startBooleanToggle(Text.translatable("option.enchantment-exploration.anvil.book.enabled"), EnchantmentExploration.getConfig().shouldRemoveBookAnvilCombination())
+                .setDefaultValue(defaultConfig.shouldRemoveBookAnvilCombination())
+                .setTooltip(Text.translatable("tooltip.enchantment-exploration.anvil.book.enabled"))
+                .setSaveConsumer(newValue -> EnchantmentExploration.getConfig().setRemoveBookAnvilCombination(newValue))
                 .build());
 
         return builder.build();

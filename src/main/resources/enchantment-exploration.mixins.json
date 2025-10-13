@@ -5,7 +5,8 @@
 	"mixins": [
 		"EnchantmentScreenHandlerMixin",
 		"EnchantingTableBlockMixin",
-		"EnchantmentScreenHandlerAccessor"
+		"EnchantmentScreenHandlerAccessor",
+		"AnvilScreenHandlerMixin"
 	],
 	"injectors": {
 		"defaultRequire": 1

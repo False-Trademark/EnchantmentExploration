@@ -10,6 +10,8 @@
   "option.enchantment-exploration.cost2": "Third Option Cost",
   "tooltip.enchantment-exploration.cost2": "The cost of the third enchantment level.",
   "category.enchantment-exploration.anvil": "Anvil",
-  "option.enchantment-exploration.anvil.enabled": "Remove Tool and Book Combination",
-  "tooltip.enchantment-exploration.anvil.enabled": "Toggles if you can combine with tools or enchantment books in an anvil."
+  "option.enchantment-exploration.anvil.tool.enabled": "Remove Tool Combination",
+  "tooltip.enchantment-exploration.anvil.tool.enabled": "Toggles if you can combine items with tools in an anvil.",
+  "option.enchantment-exploration.anvil.book.enabled": "Remove Book Combination",
+  "tooltip.enchantment-exploration.anvil.book.enabled": "Toggles if you can combine items with enchantment book in an anvil."
 }
