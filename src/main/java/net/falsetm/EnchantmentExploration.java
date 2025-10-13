@@ -16,6 +16,7 @@ import net.minecraft.enchantment.Enchantment;
 import net.minecraft.enchantment.EnchantmentLevelEntry;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
+import net.minecraft.registry.Registries;
 import net.minecraft.registry.Registry;
 import net.minecraft.registry.RegistryKeys;
 import net.minecraft.registry.entry.RegistryEntry;
@@ -253,6 +254,19 @@ public class EnchantmentExploration implements ModInitializer {
 			}
 			return ActionResult.PASS;
 		}));
+
+		ItemStackCanRepairWithCallback.EVENT.register((receiver, repairStack) -> {
+			if(config.isEnabled()){
+				var repair = config.getRepairItem(Registries.ITEM.getId(repairStack.getItem()).toString());
+				if(repair != null && repair.containsItem(Registries.ITEM.getId(receiver.getItem()).toString())){
+					return true;
+				}
+				if(!config.doDefaultRepairMaterialsWork()){
+					return false;
+				}
+			}
+			return null;
+		});
 	}
 
 	private static void loadConfig() {

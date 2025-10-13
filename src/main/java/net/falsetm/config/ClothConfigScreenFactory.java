@@ -6,6 +6,7 @@ import me.shedaniel.clothconfig2.api.ConfigEntryBuilder;
 import net.falsetm.EnchantmentExploration;
 import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.text.Text;
+import net.minecraft.util.Formatting;
 
 public class ClothConfigScreenFactory {
     public static Screen makeConfig(Screen parent) {
@@ -50,6 +51,17 @@ public class ClothConfigScreenFactory {
                 .setDefaultValue(defaultConfig.shouldRemoveBookAnvilCombination())
                 .setTooltip(Text.translatable("tooltip.enchantment-exploration.anvil.book.enabled"))
                 .setSaveConsumer(newValue -> EnchantmentExploration.getConfig().setRemoveBookAnvilCombination(newValue))
+                .build());
+        anvil.addEntry(entryBuilder.startBooleanToggle(Text.translatable("option.enchantment-exploration.anvil.vanilla-materials.disabled"), EnchantmentExploration.getConfig().doDefaultRepairMaterialsWork())
+                .setDefaultValue(defaultConfig.doDefaultRepairMaterialsWork())
+                .setTooltip(Text.translatable("tooltip.enchantment-exploration.anvil.vanilla-materials.disabled"))
+                .setSaveConsumer(newValue -> EnchantmentExploration.getConfig().setDefaultRepairMaterialsWork(newValue))
+                .build());
+        anvil.addEntry(entryBuilder.startStrList(Text.translatable("option.enchantment-exploration.anvil.custom-materials"), EnchantmentExploration.getConfig().getCustomRepairMaterialsAsStringList())
+                .setDefaultValue(defaultConfig.getCustomRepairMaterialsAsStringList())
+                .setTooltip(Text.translatable("tooltip.enchantment-exploration.anvil.custom-materials.1")
+                        .append(Text.translatable("tooltip.enchantment-exploration.anvil.custom-materials.2").formatted(Formatting.YELLOW)))
+                .setSaveConsumer(newValue -> EnchantmentExploration.getConfig().setCustomRepairMaterialsFromStringList(newValue))
                 .build());
 
         return builder.build();

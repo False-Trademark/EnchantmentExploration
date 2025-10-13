@@ -13,5 +13,10 @@
   "option.enchantment-exploration.anvil.tool.enabled": "Remove Tool Combination",
   "tooltip.enchantment-exploration.anvil.tool.enabled": "Toggles if you can combine items with tools in an anvil.",
   "option.enchantment-exploration.anvil.book.enabled": "Remove Book Combination",
-  "tooltip.enchantment-exploration.anvil.book.enabled": "Toggles if you can combine items with enchantment book in an anvil."
+  "tooltip.enchantment-exploration.anvil.book.enabled": "Toggles if you can combine items with enchantment book in an anvil.",
+  "option.enchantment-exploration.anvil.vanilla-materials.disabled": "Allow Default Repair Materials",
+  "tooltip.enchantment-exploration.anvil.vanilla-materials.disabled": "Toggles if the default repair materials will repair items, or only those in this list.",
+  "option.enchantment-exploration.anvil.custom-materials": "Custom Repair Materials",
+  "tooltip.enchantment-exploration.anvil.custom-materials.1": "Additional materials that will repair their specified items.\n\n",
+  "tooltip.enchantment-exploration.anvil.custom-materials.2": "Should be formatted: <repair material>;<tool1>/<tool2>/..."
 }

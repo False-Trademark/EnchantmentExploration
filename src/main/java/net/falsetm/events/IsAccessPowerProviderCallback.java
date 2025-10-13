@@ -19,5 +19,5 @@ public interface IsAccessPowerProviderCallback {
 
                 return null;
             });
-    @Nullable Boolean isPowerProvider(BlockState state, TagKey key);
+    @Nullable Boolean isPowerProvider(BlockState state, TagKey<?> key);
 }
