@@ -3,10 +3,13 @@
   "category.enchantment-exploration.main": "Main",
   "option.enchantment-exploration.main.enabled": "Enabled",
   "tooltip.enchantment-exploration.main.enabled": "Enables or disables all features of the mod.",
-  "option.enchantment-exploration.cost0.enabled": "First Option Cost",
-  "tooltip.enchantment-exploration.cost0.enabled": "The cost of the first enchantment level.",
-  "option.enchantment-exploration.cost1.enabled": "Second Level Cost",
-  "tooltip.enchantment-exploration.cost1.enabled": "The cost of the second enchantment level.",
-  "option.enchantment-exploration.cost2.enabled": "Third Level Cost",
-  "tooltip.enchantment-exploration.cost2.enabled": "The cost of the third enchantment level."
+  "option.enchantment-exploration.cost0": "First Option Cost",
+  "tooltip.enchantment-exploration.cost0": "The cost of the first enchantment level.",
+  "option.enchantment-exploration.cost1": "Second Option Cost",
+  "tooltip.enchantment-exploration.cost1": "The cost of the second enchantment level.",
+  "option.enchantment-exploration.cost2": "Third Option Cost",
+  "tooltip.enchantment-exploration.cost2": "The cost of the third enchantment level.",
+  "category.enchantment-exploration.anvil": "Anvil",
+  "option.enchantment-exploration.anvil.enabled": "Remove Tool and Book Combination",
+  "tooltip.enchantment-exploration.anvil.enabled": "Toggles if you can combine with tools or enchantment books in an anvil."
 }

@@ -23,6 +23,7 @@ public class EnchantmentExplorationConfig {
     public int cost0 = 10;
     public int cost1 = 10;
     public int cost2 = 10;
+    public boolean toolAnvilCombination = false;
 
     public void setEnabled(boolean enabled){
         this.enabled = enabled;
@@ -54,6 +55,14 @@ public class EnchantmentExplorationConfig {
 
     public int getCost2(){
         return cost2;
+    }
+
+    public void setAnvilCombination(boolean toolAnvilCombination){
+        this.toolAnvilCombination = toolAnvilCombination;
+    }
+
+    public boolean shouldAnvilCombination(){
+        return toolAnvilCombination;
     }
 
     public String toJson() {

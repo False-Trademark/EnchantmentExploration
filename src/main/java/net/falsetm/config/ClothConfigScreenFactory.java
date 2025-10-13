@@ -18,26 +18,33 @@ public class ClothConfigScreenFactory {
         ConfigEntryBuilder entryBuilder = builder.entryBuilder();
 
         ConfigCategory main = builder.getOrCreateCategory(Text.translatable("category.enchantment-exploration.main"));
+        ConfigCategory anvil = builder.getOrCreateCategory(Text.translatable("category.enchantment-exploration.anvil"));
 
         main.addEntry(entryBuilder.startBooleanToggle(Text.translatable("option.enchantment-exploration.main.enabled"), EnchantmentExploration.getConfig().isEnabled())
                 .setDefaultValue(defaultConfig.isEnabled())
                 .setTooltip(Text.translatable("tooltip.enchantment-exploration.main.enabled"))
                 .setSaveConsumer(newValue -> EnchantmentExploration.getConfig().setEnabled(newValue))
                 .build());
-        main.addEntry(entryBuilder.startIntField(Text.translatable("option.enchantment-exploration.cost0.enabled"), EnchantmentExploration.getConfig().getCost0())
+        main.addEntry(entryBuilder.startIntField(Text.translatable("option.enchantment-exploration.cost0"), EnchantmentExploration.getConfig().getCost0())
                 .setDefaultValue(defaultConfig.getCost0())
-                .setTooltip(Text.translatable("tooltip.enchantment-exploration.cost0.enabled"))
+                .setTooltip(Text.translatable("tooltip.enchantment-exploration.cost0"))
                 .setSaveConsumer(newValue -> EnchantmentExploration.getConfig().setCost0(newValue))
                 .build());
-        main.addEntry(entryBuilder.startIntField(Text.translatable("option.enchantment-exploration.cost1.enabled"), EnchantmentExploration.getConfig().getCost1())
+        main.addEntry(entryBuilder.startIntField(Text.translatable("option.enchantment-exploration.cost1"), EnchantmentExploration.getConfig().getCost1())
                 .setDefaultValue(defaultConfig.getCost1())
-                .setTooltip(Text.translatable("tooltip.enchantment-exploration.cost1.enabled"))
+                .setTooltip(Text.translatable("tooltip.enchantment-exploration.cost1"))
                 .setSaveConsumer(newValue -> EnchantmentExploration.getConfig().setCost1(newValue))
                 .build());
-        main.addEntry(entryBuilder.startIntField(Text.translatable("option.enchantment-exploration.cost2.enabled"), EnchantmentExploration.getConfig().getCost2())
+        main.addEntry(entryBuilder.startIntField(Text.translatable("option.enchantment-exploration.cost2"), EnchantmentExploration.getConfig().getCost2())
                 .setDefaultValue(defaultConfig.getCost2())
-                .setTooltip(Text.translatable("tooltip.enchantment-exploration.cost2.enabled"))
+                .setTooltip(Text.translatable("tooltip.enchantment-exploration.cost2"))
                 .setSaveConsumer(newValue -> EnchantmentExploration.getConfig().setCost2(newValue))
+                .build());
+
+        anvil.addEntry(entryBuilder.startBooleanToggle(Text.translatable("option.enchantment-exploration.anvil.enabled"), EnchantmentExploration.getConfig().shouldAnvilCombination())
+                .setDefaultValue(defaultConfig.shouldAnvilCombination())
+                .setTooltip(Text.translatable("tooltip.enchantment-exploration.anvil.enabled"))
+                .setSaveConsumer(newValue -> EnchantmentExploration.getConfig().setAnvilCombination(newValue))
                 .build());
 
         return builder.build();

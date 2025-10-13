@@ -3,10 +3,7 @@ package net.falsetm;
 import net.fabricmc.api.ModInitializer;
 
 import net.falsetm.config.EnchantmentExplorationConfig;
-import net.falsetm.events.EnchantmentScreenHandlerApplyCostCallback;
-import net.falsetm.events.GenerateEnchantCallback;
-import net.falsetm.events.IsAccessPowerProviderCallback;
-import net.falsetm.events.EnchantmentContentChangedCallback;
+import net.falsetm.events.*;
 import net.falsetm.mixin.EnchantmentScreenHandlerAccessor;
 import net.falsetm.mixin_ducks.EnchantmentHandlerDuck;
 import net.falsetm.util.EnchantmentHelper;
@@ -22,6 +19,7 @@ import net.minecraft.item.Items;
 import net.minecraft.registry.Registry;
 import net.minecraft.registry.RegistryKeys;
 import net.minecraft.registry.entry.RegistryEntry;
+import net.minecraft.screen.AnvilScreenHandler;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.Identifier;
@@ -243,6 +241,16 @@ public class EnchantmentExploration implements ModInitializer {
 			}
 			return inputLevels;
 		});
+
+		AnvilScreenHandlerUpdateResultCallback.EVENT.register((receiver -> {
+			if(config.isEnabled() && config.shouldAnvilCombination()){
+				ItemStack stack = receiver.getSlot(AnvilScreenHandler.INPUT_2_ID).getStack();
+				if(stack.isDamageable() || stack.getItem().equals(Items.ENCHANTED_BOOK)){
+					return ActionResult.FAIL;
+				}
+			}
+			return ActionResult.PASS;
+		}));
 	}
 
 	private static void loadConfig() {
