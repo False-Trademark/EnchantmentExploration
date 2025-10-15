@@ -5,7 +5,9 @@ import java.io.Reader;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.CompletionException;
 
@@ -30,6 +32,8 @@ public class EnchantmentExplorationConfig {
     public boolean removeBookAnvilCombination = true;
     public boolean defaultRepairMaterialsWork = true;
     public List<customRepair> customRepairMaterials = new ArrayList<>(List.of(new customRepair("minecraft:string", new String[]{"minecraft:bow", "minecraft:crossbow"}), new customRepair("minecraft:prismarine_shard", new String[]{"minecraft:trident"})));
+    public List<String> ignoreSkipLootTables = new ArrayList<>();
+    public Set<String> skipEnchantmentsInLootTable = new HashSet<>(Set.of("minecraft:blast_protection","minecraft:feather_falling","minecraft:fire_protection","minecraft:projectile_protection","minecraft:protection","minecraft:thorns","minecraft:aqua_affinity","minecraft:depth_strider","minecraft:frost_walker","minecraft:respiration","minecraft:soul_speed","minecraft:swift_sneak","minecraft:bane_of_arthropods","minecraft:breach","minecraft:density","minecraft:fire_aspect","minecraft:knockback","minecraft:looting","minecraft:sharpness","minecraft:smite","minecraft:sweeping_edge","minecraft:wind_burst","minecraft:flame","minecraft:power","minecraft:punch","minecraft:quick_charge","minecraft:multishot","minecraft:piercing","minecraft:infinity","minecraft:channeling","minecraft:impaling","minecraft:loyalty","minecraft:riptide","minecraft:efficiency","minecraft:fortune","minecraft:silk_touch","minecraft:mending","minecraft:unbreaking","minecraft:luck_of_the_sea","minecraft:lure","minecraft:binding_curse","minecraft:vanishing_curse"));
 
     public void setEnabled(boolean enabled){
         this.enabled = enabled;
@@ -127,6 +131,26 @@ public class EnchantmentExplorationConfig {
             }
         }
         return null;
+    }
+
+    public List<String> getIgnoreTables(){
+        return new ArrayList<>(ignoreSkipLootTables);
+    }
+
+    public void setIgnoreTables(List<String> list){
+        ignoreSkipLootTables = new ArrayList<>(list);
+    }
+
+    public Set<String> getSkipEnchantments(){
+        return skipEnchantmentsInLootTable;
+    }
+
+    public List<String> getSkipEnchantmentsList(){
+        return new ArrayList<>(skipEnchantmentsInLootTable);
+    }
+
+    public void setSkipEnchantmentsFromList(List<String> list){
+        skipEnchantmentsInLootTable = new HashSet<>(list);
     }
 
     public String toJson() {

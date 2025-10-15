@@ -16,9 +16,9 @@ import net.minecraft.enchantment.Enchantment;
 import net.minecraft.enchantment.EnchantmentLevelEntry;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
-import net.minecraft.registry.Registries;
-import net.minecraft.registry.Registry;
-import net.minecraft.registry.RegistryKeys;
+import net.minecraft.loot.LootTable;
+import net.minecraft.loot.context.LootContext;
+import net.minecraft.registry.*;
 import net.minecraft.registry.entry.RegistryEntry;
 import net.minecraft.screen.AnvilScreenHandler;
 import net.minecraft.server.world.ServerWorld;
@@ -34,6 +34,7 @@ import java.io.BufferedReader;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.*;
+import java.util.function.Consumer;
 import java.util.stream.Collectors;
 
 public class EnchantmentExploration implements ModInitializer {
@@ -81,7 +82,7 @@ public class EnchantmentExploration implements ModInitializer {
 							if(bookshelfBlockEntity != null){
 								for(int i = 0; i < ChiseledBookshelfBlockEntity.MAX_BOOKS; i++){
 									ItemStack bookItem = bookshelfBlockEntity.getStack(i);
-									if(bookItem.getItem() == Items.ENCHANTED_BOOK){
+									if(bookItem.isOf(Items.ENCHANTED_BOOK)){
 										ItemEnchantmentsComponent enchantmentComponent = net.minecraft.enchantment.EnchantmentHelper.getEnchantments(bookItem);
 										if(enchantmentComponent != null){
 											for(RegistryEntry<Enchantment> enchantment : enchantmentComponent.getEnchantments()){
@@ -246,7 +247,7 @@ public class EnchantmentExploration implements ModInitializer {
 		AnvilScreenHandlerUpdateResultCallback.EVENT.register((receiver -> {
 			if(config.isEnabled()){
 				ItemStack stack = receiver.getSlot(AnvilScreenHandler.INPUT_2_ID).getStack();
-				if((stack.isDamageable() && config.shouldRemoveToolAnvilCombination()) || (stack.getItem().equals(Items.ENCHANTED_BOOK) && config.shouldRemoveBookAnvilCombination())){
+				if((stack.isDamageable() && config.shouldRemoveToolAnvilCombination()) || (stack.isOf(Items.ENCHANTED_BOOK) && config.shouldRemoveBookAnvilCombination())){
 					receiver.setStackInSlot(AnvilScreenHandler.OUTPUT_ID, receiver.nextRevision(), ItemStack.EMPTY);
 					//receiver.levelCost.set(0);
 					return ActionResult.FAIL;
@@ -267,6 +268,55 @@ public class EnchantmentExploration implements ModInitializer {
 			}
 			return null;
 		});
+
+		LootTableApplyFunctionsCallback.EVENT.register((receiver, itemApplier, lootConsumer, context, original) -> {
+			if(config.isEnabled()){
+				Consumer<ItemStack> operation = original.call(itemApplier, generateLootAfterFunctions(receiver, lootConsumer, context), context);
+				return new Consumer<ItemStack>() {
+					@Override
+					public void accept(ItemStack itemStack) {
+
+						operation.accept(itemStack);
+
+
+					}
+				};
+			}
+			return null;
+		});
+	}
+
+	public static Consumer<ItemStack> generateLootAfterFunctions(LootTable receiver, Consumer<ItemStack> lootConsumer, LootContext context) {
+		return (itemStack) -> {
+			if(itemStack.isOf(Items.ENCHANTED_BOOK)){
+				boolean ignore = false;
+				for(String entry : config.getIgnoreTables()) {
+
+					Identifier id = Identifier.of(entry);
+					var attempted = context.getWorld().getServer().getReloadableRegistries().getLootTable(RegistryKey.of(RegistryKeys.LOOT_TABLE, id));
+
+					if (receiver.equals(attempted)) {
+						ignore = true;
+						break;
+					}
+				}
+				if(!ignore){
+					ItemStack itemEnchanted = itemStack.copy();
+					ItemEnchantmentsComponent enchantmentComponent = net.minecraft.enchantment.EnchantmentHelper.getEnchantments(itemEnchanted);
+
+					net.minecraft.enchantment.EnchantmentHelper.apply(itemStack, components -> components.remove(removeEnchant -> {return true;}));
+					for(RegistryEntry<Enchantment> enchantment : enchantmentComponent.getEnchantments()){
+						if(!getConfig().getSkipEnchantments().contains(enchantment.getIdAsString())){
+							itemStack.addEnchantment(enchantment, enchantmentComponent.getLevel(enchantment));
+						}
+					}
+					if(net.minecraft.enchantment.EnchantmentHelper.getEnchantments(itemStack).getEnchantments().isEmpty()){
+						itemStack = ItemStack.EMPTY;
+					}
+				}
+			}
+			lootConsumer.accept(itemStack);
+		};
 	}
 
 	private static void loadConfig() {

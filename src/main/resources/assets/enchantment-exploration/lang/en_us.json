@@ -18,5 +18,10 @@
   "tooltip.enchantment-exploration.anvil.vanilla-materials.disabled": "Toggles if the default repair materials will repair items, or only those in this list.",
   "option.enchantment-exploration.anvil.custom-materials": "Custom Repair Materials",
   "tooltip.enchantment-exploration.anvil.custom-materials.1": "Additional materials that will repair their specified items.\n\n",
-  "tooltip.enchantment-exploration.anvil.custom-materials.2": "Should be formatted: <repair material>;<tool1>/<tool2>/..."
+  "tooltip.enchantment-exploration.anvil.custom-materials.2": "Should be formatted: <repair material>;<tool1>/<tool2>/...",
+  "category.enchantment-exploration.loot-table": "Loot Table",
+  "option.enchantment-exploration.loot-table.skip": "Skip Enchantments",
+  "tooltip.enchantment-exploration.loot-table.skip": "When generating a loot table, a normal enchanted book (those naturally occuring in vanilla) will not generate with these enchantments. If no viable enchantments are found, the enchanted book will not be generated.",
+  "option.enchantment-exploration.loot-table.ignore-skip": "Ignore Skip",
+  "tooltip.enchantment-exploration.loot-table.ignore-skip": "Loot tables that will ignore the enchantment skips. Useful for modded loot tables where vanilla enchanted books are wanted."
 }

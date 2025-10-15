@@ -20,6 +20,7 @@ public class ClothConfigScreenFactory {
 
         ConfigCategory main = builder.getOrCreateCategory(Text.translatable("category.enchantment-exploration.main"));
         ConfigCategory anvil = builder.getOrCreateCategory(Text.translatable("category.enchantment-exploration.anvil"));
+        ConfigCategory lootTables = builder.getOrCreateCategory(Text.translatable("category.enchantment-exploration.loot-table"));
 
         main.addEntry(entryBuilder.startBooleanToggle(Text.translatable("option.enchantment-exploration.main.enabled"), EnchantmentExploration.getConfig().isEnabled())
                 .setDefaultValue(defaultConfig.isEnabled())
@@ -62,6 +63,17 @@ public class ClothConfigScreenFactory {
                 .setTooltip(Text.translatable("tooltip.enchantment-exploration.anvil.custom-materials.1")
                         .append(Text.translatable("tooltip.enchantment-exploration.anvil.custom-materials.2").formatted(Formatting.YELLOW)))
                 .setSaveConsumer(newValue -> EnchantmentExploration.getConfig().setCustomRepairMaterialsFromStringList(newValue))
+                .build());
+
+        lootTables.addEntry(entryBuilder.startStrList(Text.translatable("option.enchantment-exploration.loot-table.ignore-skip"), EnchantmentExploration.getConfig().getIgnoreTables())
+                .setDefaultValue(defaultConfig.getIgnoreTables())
+                .setTooltip(Text.translatable("tooltip.enchantment-exploration.loot-table.ignore-skip"))
+                .setSaveConsumer(newValue -> EnchantmentExploration.getConfig().setIgnoreTables(newValue))
+                .build());
+        lootTables.addEntry(entryBuilder.startStrList(Text.translatable("option.enchantment-exploration.loot-table.skip"), EnchantmentExploration.getConfig().getSkipEnchantmentsList())
+                .setDefaultValue(defaultConfig.getSkipEnchantmentsList())
+                .setTooltip(Text.translatable("tooltip.enchantment-exploration.loot-table.skip"))
+                .setSaveConsumer(newValue -> EnchantmentExploration.getConfig().setSkipEnchantmentsFromList(newValue))
                 .build());
 
         return builder.build();
