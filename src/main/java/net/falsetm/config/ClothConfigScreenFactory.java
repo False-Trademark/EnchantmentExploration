@@ -75,6 +75,12 @@ public class ClothConfigScreenFactory {
                 .setTooltip(Text.translatable("tooltip.enchantment-exploration.loot-table.skip"))
                 .setSaveConsumer(newValue -> EnchantmentExploration.getConfig().setSkipEnchantmentsFromList(newValue))
                 .build());
+        lootTables.addEntry(entryBuilder.startStrList(Text.translatable("option.enchantment-exploration.loot-table.book-pulls"), EnchantmentExploration.getConfig().getLootTableBookPullsList())
+                .setDefaultValue(defaultConfig.getLootTableBookPullsList())
+                .setTooltip(Text.translatable("tooltip.enchantment-exploration.loot-table.skip.book-pulls.1")
+                        .append(Text.translatable("tooltip.enchantment-exploration.anvil.skip.book-pulls.2").formatted(Formatting.YELLOW)))
+                .setSaveConsumer(newValue -> EnchantmentExploration.getConfig().setLootTableBookPullsList(newValue))
+                .build());
 
         return builder.build();
     }

@@ -4,10 +4,7 @@ import java.io.BufferedWriter;
 import java.io.Reader;
 import java.nio.file.Files;
 import java.nio.file.Path;
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.CompletionException;
 
@@ -34,6 +31,10 @@ public class EnchantmentExplorationConfig {
     public List<customRepair> customRepairMaterials = new ArrayList<>(List.of(new customRepair("minecraft:string", new String[]{"minecraft:bow", "minecraft:crossbow"}), new customRepair("minecraft:prismarine_shard", new String[]{"minecraft:trident"})));
     public List<String> ignoreSkipLootTables = new ArrayList<>();
     public Set<String> skipEnchantmentsInLootTable = new HashSet<>(Set.of("minecraft:blast_protection","minecraft:feather_falling","minecraft:fire_protection","minecraft:projectile_protection","minecraft:protection","minecraft:thorns","minecraft:aqua_affinity","minecraft:depth_strider","minecraft:frost_walker","minecraft:respiration","minecraft:soul_speed","minecraft:swift_sneak","minecraft:bane_of_arthropods","minecraft:breach","minecraft:density","minecraft:fire_aspect","minecraft:knockback","minecraft:looting","minecraft:sharpness","minecraft:smite","minecraft:sweeping_edge","minecraft:wind_burst","minecraft:flame","minecraft:power","minecraft:punch","minecraft:quick_charge","minecraft:multishot","minecraft:piercing","minecraft:infinity","minecraft:channeling","minecraft:impaling","minecraft:loyalty","minecraft:riptide","minecraft:efficiency","minecraft:fortune","minecraft:silk_touch","minecraft:mending","minecraft:unbreaking","minecraft:luck_of_the_sea","minecraft:lure","minecraft:binding_curse","minecraft:vanishing_curse"));
+    public Map<String, String> lootTableBookPulls = new HashMap<>(Map.of("minecraft:chests/abandoned_mineshaft","enchantment-exploration:book/generic_mineshaft",
+            "minecraft:chests/simple_dungeon","enchantment-exploration:book/generic_dungeon",
+            "minecraft:chests/pillager_outpost", "enchantment-exploration:book/crossbow",
+            "minecraft:chests/woodland_mansion", "enchantment-exploration:book/crossbow"));
 
     public void setEnabled(boolean enabled){
         this.enabled = enabled;
@@ -151,6 +152,31 @@ public class EnchantmentExplorationConfig {
 
     public void setSkipEnchantmentsFromList(List<String> list){
         skipEnchantmentsInLootTable = new HashSet<>(list);
+    }
+
+    public Map<String, String>getLootTableBookPulls(){
+        return lootTableBookPulls;
+    }
+
+    public List<String> getLootTableBookPullsList(){
+        List<String> outList = new ArrayList<>();
+        for(var entry : lootTableBookPulls.entrySet()){
+            String combined = entry.getKey() + ";" + entry.getValue();
+            outList.add(combined);
+        }
+        return outList;
+    }
+
+    public void setLootTableBookPullsList(List<String> stringList){
+        Map<String, String> newMap = new HashMap<>();
+        for(String string : stringList){
+            String[] splitString = string.split(";", 2);
+            if(splitString.length != 2){
+                continue;
+            }
+            newMap.put(splitString[0], splitString[1]);
+        }
+        lootTableBookPulls = newMap;
     }
 
     public String toJson() {

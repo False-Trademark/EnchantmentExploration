@@ -6,6 +6,7 @@ import net.falsetm.config.EnchantmentExplorationConfig;
 import net.falsetm.events.*;
 import net.falsetm.mixin.EnchantmentScreenHandlerAccessor;
 import net.falsetm.mixin_ducks.EnchantmentHandlerDuck;
+import net.falsetm.mixin_ducks.LootTableDuck;
 import net.falsetm.util.EnchantmentHelper;
 import net.minecraft.block.Blocks;
 import net.minecraft.block.EnchantingTableBlock;
@@ -45,8 +46,10 @@ public class EnchantmentExploration implements ModInitializer {
 	// That way, it's clear which mod wrote info, warnings, and errors.
 	public static final Logger LOGGER = LoggerFactory.getLogger(MOD_ID);
 
-	private static final Identifier mixerID = Identifier.of("enchantment-exploration","mixer");
-	private static final Identifier all_enchantsID = Identifier.of("enchantment-exploration","all_enchants");
+	private static final Identifier mixerID = Identifier.of(MOD_ID,"mixer");
+	private static final Identifier all_enchantsID = Identifier.of(MOD_ID,"all_enchants");
+
+	private static final String enchantmentAllowedString = "enchantment-exploration-allowed";
 
 	private static EnchantmentExplorationConfig config;
 
@@ -269,28 +272,43 @@ public class EnchantmentExploration implements ModInitializer {
 			return null;
 		});
 
+		//I should redo this function to instead of passing the operation, to return a consumer which will get added to the stack, but seeing as how I'm not using this function twice ATM and that's extra work I'm leaving as is for now
 		LootTableApplyFunctionsCallback.EVENT.register((receiver, itemApplier, lootConsumer, context, original) -> {
 			if(config.isEnabled()){
-				Consumer<ItemStack> operation = original.call(itemApplier, generateLootAfterFunctions(receiver, lootConsumer, context), context);
-				return new Consumer<ItemStack>() {
-					@Override
-					public void accept(ItemStack itemStack) {
-
-						operation.accept(itemStack);
-
-
-					}
-				};
+				return original.call(itemApplier, generateLootAfterFunctions(receiver, lootConsumer, context), context);
 			}
 			return null;
+		});
+
+		LootTableFinishGenerateUnprocessedCallback.EVENT.register((receiver, context, lootConsumer) -> {
+			if(config.isEnabled()){
+				for (var entry : config.getLootTableBookPulls().entrySet()) {
+
+					ReloadableRegistries.Lookup lookup = context.getWorld().getServer().getReloadableRegistries();
+
+					Identifier table1ID = Identifier.of(entry.getKey());
+					var attempted = lookup.getLootTable(RegistryKey.of(RegistryKeys.LOOT_TABLE, table1ID));
+
+					if (receiver.equals(attempted)) {
+						Identifier table2ID = Identifier.of(entry.getValue());
+						var secondaryTable = lookup.getLootTable(RegistryKey.of(RegistryKeys.LOOT_TABLE, table2ID));
+						if(secondaryTable != null){
+							((LootTableDuck) secondaryTable).falsetm$skipMixin();
+							secondaryTable.generateUnprocessedLoot(context, lootConsumer);
+						}
+						break;
+					}
+				}
+			}
+			return ActionResult.PASS;
 		});
 	}
 
 	public static Consumer<ItemStack> generateLootAfterFunctions(LootTable receiver, Consumer<ItemStack> lootConsumer, LootContext context) {
 		return (itemStack) -> {
-			if(itemStack.isOf(Items.ENCHANTED_BOOK)){
+			if(itemStack.isOf(Items.ENCHANTED_BOOK)) {
 				boolean ignore = false;
-				for(String entry : config.getIgnoreTables()) {
+				for (String entry : config.getIgnoreTables()) {
 
 					Identifier id = Identifier.of(entry);
 					var attempted = context.getWorld().getServer().getReloadableRegistries().getLootTable(RegistryKey.of(RegistryKeys.LOOT_TABLE, id));
@@ -300,17 +318,17 @@ public class EnchantmentExploration implements ModInitializer {
 						break;
 					}
 				}
-				if(!ignore){
+				if (!ignore) {
 					ItemStack itemEnchanted = itemStack.copy();
 					ItemEnchantmentsComponent enchantmentComponent = net.minecraft.enchantment.EnchantmentHelper.getEnchantments(itemEnchanted);
 
-					net.minecraft.enchantment.EnchantmentHelper.apply(itemStack, components -> components.remove(removeEnchant -> {return true;}));
-					for(RegistryEntry<Enchantment> enchantment : enchantmentComponent.getEnchantments()){
-						if(!getConfig().getSkipEnchantments().contains(enchantment.getIdAsString())){
+					net.minecraft.enchantment.EnchantmentHelper.apply(itemStack, components -> components.remove(removeEnchant -> true));
+					for (RegistryEntry<Enchantment> enchantment : enchantmentComponent.getEnchantments()) {
+						if (!getConfig().getSkipEnchantments().contains(enchantment.getIdAsString())) {
 							itemStack.addEnchantment(enchantment, enchantmentComponent.getLevel(enchantment));
 						}
 					}
-					if(net.minecraft.enchantment.EnchantmentHelper.getEnchantments(itemStack).getEnchantments().isEmpty()){
+					if (net.minecraft.enchantment.EnchantmentHelper.getEnchantments(itemStack).getEnchantments().isEmpty()) {
 						itemStack = ItemStack.EMPTY;
 					}
 				}
