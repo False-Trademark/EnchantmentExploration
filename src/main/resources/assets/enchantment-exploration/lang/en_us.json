@@ -25,6 +25,6 @@
   "option.enchantment-exploration.loot-table.ignore-skip": "Ignore Skip",
   "tooltip.enchantment-exploration.loot-table.ignore-skip": "Loot tables that will ignore the enchantment skips. Useful for modded loot tables where vanilla enchanted books are wanted.",
   "option.enchantment-exploration.loot-table.book-pulls": "Custom Book Generation",
-  "tooltip.enchantment-exploration.loot-table.skip.book-pulls.1": "A set of primary loot table, to secondary loot tables to pull an enchanted book from. The first is the loot pool being generated, the second is the pool to pull from. Every time loot is generated, there is always a pull from the second loot table. No Enchantments are skipped during this pull.\n",
+  "tooltip.enchantment-exploration.loot-table.skip.book-pulls.1": "A set of primary loot table, to secondary loot tables to pull an enchanted book from. The first is the loot pool being generated, the second is the pool to pull from. Every time loot is generated, there is always a pull from the second loot table. No Enchantments are skipped during this pull. CURRENTLY DOES NOT SUPPORT LOOT TABLE ENTRIES\n",
   "tooltip.enchantment-exploration.anvil.skip.book-pulls.2": "Should be formatted: <primary loot table>;<secondary loot table>"
 }

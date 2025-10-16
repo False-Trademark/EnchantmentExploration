@@ -31,10 +31,25 @@ public class EnchantmentExplorationConfig {
     public List<customRepair> customRepairMaterials = new ArrayList<>(List.of(new customRepair("minecraft:string", new String[]{"minecraft:bow", "minecraft:crossbow"}), new customRepair("minecraft:prismarine_shard", new String[]{"minecraft:trident"})));
     public List<String> ignoreSkipLootTables = new ArrayList<>();
     public Set<String> skipEnchantmentsInLootTable = new HashSet<>(Set.of("minecraft:blast_protection","minecraft:feather_falling","minecraft:fire_protection","minecraft:projectile_protection","minecraft:protection","minecraft:thorns","minecraft:aqua_affinity","minecraft:depth_strider","minecraft:frost_walker","minecraft:respiration","minecraft:soul_speed","minecraft:swift_sneak","minecraft:bane_of_arthropods","minecraft:breach","minecraft:density","minecraft:fire_aspect","minecraft:knockback","minecraft:looting","minecraft:sharpness","minecraft:smite","minecraft:sweeping_edge","minecraft:wind_burst","minecraft:flame","minecraft:power","minecraft:punch","minecraft:quick_charge","minecraft:multishot","minecraft:piercing","minecraft:infinity","minecraft:channeling","minecraft:impaling","minecraft:loyalty","minecraft:riptide","minecraft:efficiency","minecraft:fortune","minecraft:silk_touch","minecraft:mending","minecraft:unbreaking","minecraft:luck_of_the_sea","minecraft:lure","minecraft:binding_curse","minecraft:vanishing_curse"));
-    public Map<String, String> lootTableBookPulls = new HashMap<>(Map.of("minecraft:chests/abandoned_mineshaft","enchantment-exploration:book/generic_mineshaft",
-            "minecraft:chests/simple_dungeon","enchantment-exploration:book/generic_dungeon",
-            "minecraft:chests/pillager_outpost", "enchantment-exploration:book/crossbow",
-            "minecraft:chests/woodland_mansion", "enchantment-exploration:book/crossbow"));
+    public Map<String, String> lootTableBookPulls = new HashMap<>(Map.ofEntries(
+            Map.entry("minecraft:chests/abandoned_mineshaft","enchantment-exploration:book/generic_mineshaft"),
+            Map.entry("minecraft:chests/simple_dungeon","enchantment-exploration:book/generic_dungeon"),
+            Map.entry("minecraft:chests/pillager_outpost", "enchantment-exploration:book/crossbow"),
+            Map.entry("minecraft:chests/woodland_mansion", "enchantment-exploration:book/crossbow"),
+            Map.entry("minecraft:chests/ancient_city", "enchantment-exploration:book/ancient_city"),
+            Map.entry("minecraft:chests/ancient_city_ice_box", "enchantment-exploration:book/frost"),
+            Map.entry("minecraft:chests/igloo_chest", "enchantment-exploration:book/frost"),
+            Map.entry("minecraft:chests/shipwreck_map", "enchantment-exploration:book/ocean0"),
+            Map.entry("minecraft:chests/underwater_ruin_big", "enchantment-exploration:book/ocean1"),
+            Map.entry("minecraft:chests/underwater_ruin_small", "enchantment-exploration:book/ocean1"),
+            Map.entry("minecraft:chests/buried_treasure", "enchantment-exploration:book/ocean2"),
+            Map.entry("minecraft:chests/jungle_temple", "enchantment-exploration:book/jungle"),
+            Map.entry("minecraft:chests/desert_pyramid", "enchantment-exploration:book/pyramid"),
+            Map.entry("minecraft:chests/stronghold_library", "enchantment-exploration:book/mending"),
+            Map.entry("minecraft:chests/nether_bridge", "enchantment-exploration:book/fortress"),
+            Map.entry("minecraft:chests/bastion_treasure", "enchantment-exploration:book/protection"),
+            Map.entry("minecraft:chests/bastion_other", "enchantment-exploration:book/bastion"))
+    );
 
     public void setEnabled(boolean enabled){
         this.enabled = enabled;
