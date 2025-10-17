@@ -122,7 +122,7 @@ public class EnchantmentExploration implements ModInitializer {
 
 					//bump up now if we should show it
 					float roll = random.nextFloat();
-					int selectedEnchantsLevel = receiver.enchantmentLevel[0];
+					int selectedEnchantsLevel = selected.level;
 					if(config.shouldShowBumpUp() && roll <= config.getBumpUpChance() && selectedEnchantsLevel < selected.enchantment.value().getMaxLevel()){
 						selected = new EnchantmentLevelEntry(selected.enchantment, selected.level+1);
 					}
