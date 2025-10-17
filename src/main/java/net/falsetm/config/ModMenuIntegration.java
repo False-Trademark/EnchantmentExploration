@@ -1,8 +1,7 @@
-package net.falsetm;
+package net.falsetm.config;
 
 import com.terraformersmc.modmenu.api.ConfigScreenFactory;
 import com.terraformersmc.modmenu.api.ModMenuApi;
-import net.falsetm.config.ClothConfigScreenFactory;
 import net.fabricmc.loader.api.FabricLoader;
 
 public class ModMenuIntegration implements ModMenuApi

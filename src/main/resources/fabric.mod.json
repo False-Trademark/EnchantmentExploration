@@ -23,7 +23,7 @@
           "net.falsetm.EnchantmentExploration"
 		],
 		"modmenu": [
-			"net.falsetm.ModMenuIntegration"
+			"net.falsetm.config.ModMenuIntegration"
 		]
 	},
 	"mixins": [
