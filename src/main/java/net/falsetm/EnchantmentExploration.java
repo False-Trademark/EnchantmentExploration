@@ -120,6 +120,13 @@ public class EnchantmentExploration implements ModInitializer {
 
 					EnchantmentLevelEntry selected = possibleEnchants.get(random.nextInt(possibleEnchants.size()));
 
+					//bump up now if we should show it
+					float roll = random.nextFloat();
+					int selectedEnchantsLevel = receiver.enchantmentLevel[0];
+					if(config.shouldShowBumpUp() && roll <= config.getBumpUpChance() && selectedEnchantsLevel < selected.enchantment.value().getMaxLevel()){
+						selected = new EnchantmentLevelEntry(selected.enchantment, selected.level+1);
+					}
+
 					//set the enchantment. Edit this to make it use text for display
 					receiver.enchantmentPower[0] = config.getCost0();
 					receiver.enchantmentId[0] = indexedIterable.getRawId(selected.enchantment);
@@ -175,9 +182,9 @@ public class EnchantmentExploration implements ModInitializer {
 							if(enchantment.isPresent()){
 
 								Enchantment selectedEnchantment = enchantment.get().value();
-								int roll = random.nextInt(5);
+								float roll = random.nextFloat();
 								int selectedEnchantsLevel = receiver.enchantmentLevel[0];
-								if(roll == 0 && selectedEnchantsLevel < selectedEnchantment.getMaxLevel()){
+								if(!config.shouldShowBumpUp() && roll <= config.getBumpUpChance() && selectedEnchantsLevel < selectedEnchantment.getMaxLevel()){
 									selectedEnchantsLevel++;
 								}
 								EnchantmentLevelEntry outputEnchantmentEntry = new EnchantmentLevelEntry(enchantment.get(), selectedEnchantsLevel);
@@ -196,13 +203,13 @@ public class EnchantmentExploration implements ModInitializer {
 							boolean compatibleWithAll = net.minecraft.enchantment.EnchantmentHelper.isCompatible(returnEnchants.stream().map(e->e.enchantment).collect(Collectors.toList()), entry.enchantment);
 
 							if(compatibleWithAll){
-								int roll = random.nextInt(2);
-								if(returnEnchants.isEmpty() || roll == 0){
+								float roll = random.nextFloat();
+								if(returnEnchants.isEmpty() || roll <= config.getAdditionalEnchantmentChance()){
 									int curLevel = entry.level;
 
 									if(curLevel > 1){
-										roll = random.nextInt(5);
-										if(roll < 2){
+										roll = random.nextFloat();
+										if(roll <= config.getBumpDownChance()){
 											curLevel--;
 										}
 									}
@@ -249,8 +256,24 @@ public class EnchantmentExploration implements ModInitializer {
 
 		AnvilScreenHandlerUpdateResultCallback.EVENT.register((receiver -> {
 			if(config.isEnabled()){
-				ItemStack stack = receiver.getSlot(AnvilScreenHandler.INPUT_2_ID).getStack();
-				if((stack.isDamageable() && config.shouldRemoveToolAnvilCombination()) || (stack.isOf(Items.ENCHANTED_BOOK) && config.shouldRemoveBookAnvilCombination())){
+				ItemStack input1 = receiver.getSlot(AnvilScreenHandler.INPUT_1_ID).getStack();
+				ItemStack input2 = receiver.getSlot(AnvilScreenHandler.INPUT_2_ID).getStack();
+				boolean cancelBook = false;
+				if(input2.isOf(Items.ENCHANTED_BOOK)){
+					cancelBook = true;
+					if((input1.isOf(Items.ENCHANTED_BOOK) && config.shouldAnvilCombineBookUpgrade())){
+						cancelBook = false;
+						ItemEnchantmentsComponent enchants1 = net.minecraft.enchantment.EnchantmentHelper.getEnchantments(input1);
+						ItemEnchantmentsComponent enchants2 = net.minecraft.enchantment.EnchantmentHelper.getEnchantments(input2);
+						for(var enchantment : enchants1.getEnchantments()){
+							if(!enchants2.getEnchantments().contains(enchantment) || enchants1.getLevel(enchantment) != enchants2.getLevel(enchantment)){
+								cancelBook = true;
+								break;
+							}
+						}
+					}
+				}
+				if((input2.isDamageable() && config.shouldRemoveToolAnvilCombination()) || (config.shouldRemoveBookAnvilCombination() && cancelBook)){
 					receiver.setStackInSlot(AnvilScreenHandler.OUTPUT_ID, receiver.nextRevision(), ItemStack.EMPTY);
 					//receiver.levelCost.set(0);
 					return ActionResult.FAIL;
@@ -258,6 +281,42 @@ public class EnchantmentExploration implements ModInitializer {
 			}
 			return ActionResult.PASS;
 		}));
+
+		AnvilScreenUpdateResultGetSecondInputCallback.EVENT.register((receiver, inventory) -> {
+			if(config.isEnabled()){
+				ItemStack book = inventory.getStack(0);
+				if(book.isOf(Items.ENCHANTED_BOOK)){
+					ItemStack input2 = inventory.getStack(1);
+					String itemID = Registries.ITEM.getId(input2.getItem()).toString();
+					if(config.getAnvilBookUpgradeItems().contains(itemID)){
+						ItemEnchantmentsComponent enchantmentsComponent = net.minecraft.enchantment.EnchantmentHelper.getEnchantments(book);
+						if(!enchantmentsComponent.getEnchantments().isEmpty()){
+							ItemStack returnStack = Items.ENCHANTED_BOOK.getDefaultStack();
+							net.minecraft.enchantment.EnchantmentHelper.set(returnStack, enchantmentsComponent);
+							return returnStack;
+						}
+					}
+				}
+			}
+			return null;
+		});
+
+		//If you are a developer and are having an issue with compatibility because of this. leave an issue. I'll do something better, but ATM I don't want to deal with this.
+		//patching removing the second stack on repair
+		AnvilScreenTakeOutputNoRepairClearSecondCallback.EVENT.register((receiver, inventory) -> {
+			if(config.isEnabled()){
+				ItemStack input2 = inventory.getStack(1);
+				if(!input2.isEmpty() && input2.getCount() > 1){
+					input2.decrement(1);
+					inventory.setStack(1, input2);
+				}
+				else{
+					inventory.setStack(1, ItemStack.EMPTY);
+				}
+				return ActionResult.FAIL;
+			}
+			return ActionResult.PASS;
+		});
 
 		ItemStackCanRepairWithCallback.EVENT.register((receiver, repairStack) -> {
 			if(config.isEnabled()){
@@ -324,7 +383,7 @@ public class EnchantmentExploration implements ModInitializer {
 
 					net.minecraft.enchantment.EnchantmentHelper.apply(itemStack, components -> components.remove(removeEnchant -> true));
 					for (RegistryEntry<Enchantment> enchantment : enchantmentComponent.getEnchantments()) {
-						if (!getConfig().getSkipEnchantments().contains(enchantment.getIdAsString())) {
+						if (!config.getSkipEnchantments().contains(enchantment.getIdAsString())) {
 							itemStack.addEnchantment(enchantment, enchantmentComponent.getLevel(enchantment));
 						}
 					}

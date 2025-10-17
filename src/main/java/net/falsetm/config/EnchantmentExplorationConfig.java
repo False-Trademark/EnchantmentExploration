@@ -22,11 +22,17 @@ public class EnchantmentExplorationConfig {
     public static final Gson GSON = new GsonBuilder().setPrettyPrinting().create();
 
     public boolean enabled = true;
+    public boolean showBumpUp = true;
+    public float bumpUpChance = 0.2f;
+    public float additionalEnchantmentChance = 0.5f;
+    public float bumpDownChance = 0.4f;
     public int cost0 = 10;
     public int cost1 = 10;
     public int cost2 = 10;
     public boolean removeToolAnvilCombination = true;
     public boolean removeBookAnvilCombination = true;
+    public boolean anvilCombineBookUpgrade = true;
+    public List<String> anvilBookUpgradeItems = new ArrayList<>(List.of("minecraft:nether_star"));
     public boolean defaultRepairMaterialsWork = true;
     public List<customRepair> customRepairMaterials = new ArrayList<>(List.of(new customRepair("minecraft:string", new String[]{"minecraft:bow", "minecraft:crossbow"}), new customRepair("minecraft:prismarine_shard", new String[]{"minecraft:trident"})));
     public List<String> ignoreSkipLootTables = new ArrayList<>();
@@ -57,6 +63,38 @@ public class EnchantmentExplorationConfig {
 
     public boolean isEnabled(){
         return enabled;
+    }
+
+    public void setShowBumpUp(boolean showBumpUp){
+        this.showBumpUp = showBumpUp;
+    }
+
+    public boolean shouldShowBumpUp(){
+        return showBumpUp;
+    }
+
+    public void setBumpUpChance(float bumpUpChance){
+        this.bumpUpChance = bumpUpChance;
+    }
+
+    public float getBumpUpChance(){
+        return bumpUpChance;
+    }
+
+    public void setAdditionalEnchantmentChance(float additionalEnchantmentChance){
+        this.additionalEnchantmentChance = additionalEnchantmentChance;
+    }
+
+    public float getAdditionalEnchantmentChance(){
+        return additionalEnchantmentChance;
+    }
+
+    public void setBumpDownChance(float bumpDownChance){
+        this.bumpDownChance = bumpDownChance;
+    }
+
+    public float getBumpDownChance(){
+        return bumpDownChance;
     }
 
     public void setCost0(int newCost){
@@ -97,6 +135,22 @@ public class EnchantmentExplorationConfig {
 
     public boolean shouldRemoveBookAnvilCombination(){
         return removeBookAnvilCombination;
+    }
+
+    public void setAnvilCombineBookUpgrade(boolean anvilCombineBookUpgrade) {
+        this.anvilCombineBookUpgrade = anvilCombineBookUpgrade;
+    }
+
+    public boolean shouldAnvilCombineBookUpgrade(){
+        return anvilCombineBookUpgrade;
+    }
+
+    public void setAnvilBookUpgradeItems(List<String> newList){
+        anvilBookUpgradeItems = newList;
+    }
+
+    public List<String> getAnvilBookUpgradeItems(){
+        return anvilBookUpgradeItems;
     }
 
     public void setDefaultRepairMaterialsWork(boolean defaultRepairMaterialsWork){

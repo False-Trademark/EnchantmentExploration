@@ -26,5 +26,17 @@
   "tooltip.enchantment-exploration.loot-table.ignore-skip": "Loot tables that will ignore the enchantment skips. Useful for modded loot tables where vanilla enchanted books are wanted.",
   "option.enchantment-exploration.loot-table.book-pulls": "Custom Book Generation",
   "tooltip.enchantment-exploration.loot-table.skip.book-pulls.1": "A set of primary loot table, to secondary loot tables to pull an enchanted book from. The first is the loot pool being generated, the second is the pool to pull from. Every time loot is generated, there is always a pull from the second loot table. No Enchantments are skipped during this pull. CURRENTLY DOES NOT SUPPORT LOOT TABLE ENTRIES\n",
-  "tooltip.enchantment-exploration.anvil.skip.book-pulls.2": "Should be formatted: <primary loot table>;<secondary loot table>"
+  "tooltip.enchantment-exploration.anvil.skip.book-pulls.2": "Should be formatted: <primary loot table>;<secondary loot table>",
+  "option.enchantment-exploration.anvil.combine.enabled": "Combine Similar Enchantment Books",
+  "tooltip.enchantment-exploration.anvil.combine.enabled": "Should enchanted books with the same enchants be able to be combined to upgrade a level.",
+  "option.enchantment-exploration.anvil.upgrade-materials": "Additional Book Upgrade Materials",
+  "tooltip.enchantment-exploration.anvil.upgrade-materials": "These materials can also be combined with a book to upgrade the ecnhantments by a level.",
+  "option.enchantment-exploration.chance-up": "Level Upgrade Chance",
+  "tooltip.enchantment-exploration.chance-up": "The chance that the level one enchantment will bump up the output enchantment a level higher than in bookshelves.",
+  "option.enchantment-exploration.chance-enchantments": "Additional Enchantment Chance",
+  "tooltip.enchantment-exploration.chance-enchantments": "The chance each enchantment in your shelves has to be added to a level two enchant.",
+  "option.enchantment-exploration.chance-down": "Level Downgrade Chance",
+  "tooltip.enchantment-exploration.chance-down": "The chance that an enchant will downgrade a level in a level two enchant.",
+  "option.enchantment-exploration.show-bump": "Show Upgrade Before Selection",
+  "tooltip.enchantment-exploration.show-bump": "Shows the upgrade in the enchantment level from a level one enchant before enchanting the item."
 }

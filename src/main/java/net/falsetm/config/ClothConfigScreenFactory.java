@@ -27,6 +27,26 @@ public class ClothConfigScreenFactory {
                 .setTooltip(Text.translatable("tooltip.enchantment-exploration.main.enabled"))
                 .setSaveConsumer(newValue -> EnchantmentExploration.getConfig().setEnabled(newValue))
                 .build());
+        main.addEntry(entryBuilder.startBooleanToggle(Text.translatable("option.enchantment-exploration.show-bump"), EnchantmentExploration.getConfig().shouldShowBumpUp())
+                .setDefaultValue(defaultConfig.shouldShowBumpUp())
+                .setTooltip(Text.translatable("tooltip.enchantment-exploration.show-bump"))
+                .setSaveConsumer(newValue -> EnchantmentExploration.getConfig().setShowBumpUp(newValue))
+                .build());
+        main.addEntry(entryBuilder.startFloatField(Text.translatable("option.enchantment-exploration.chance-up"), EnchantmentExploration.getConfig().getBumpUpChance())
+                .setDefaultValue(defaultConfig.getBumpUpChance())
+                .setTooltip(Text.translatable("tooltip.enchantment-exploration.chance-up"))
+                .setSaveConsumer(newValue -> EnchantmentExploration.getConfig().setBumpUpChance(newValue))
+                .build());
+        main.addEntry(entryBuilder.startFloatField(Text.translatable("option.enchantment-exploration.chance-enchantments"), EnchantmentExploration.getConfig().getAdditionalEnchantmentChance())
+                .setDefaultValue(defaultConfig.getAdditionalEnchantmentChance())
+                .setTooltip(Text.translatable("tooltip.enchantment-exploration.chance-enchantments"))
+                .setSaveConsumer(newValue -> EnchantmentExploration.getConfig().setAdditionalEnchantmentChance(newValue))
+                .build());
+        main.addEntry(entryBuilder.startFloatField(Text.translatable("option.enchantment-exploration.chance-down"), EnchantmentExploration.getConfig().getBumpDownChance())
+                .setDefaultValue(defaultConfig.getBumpDownChance())
+                .setTooltip(Text.translatable("tooltip.enchantment-exploration.chance-down"))
+                .setSaveConsumer(newValue -> EnchantmentExploration.getConfig().setBumpDownChance(newValue))
+                .build());
         main.addEntry(entryBuilder.startIntField(Text.translatable("option.enchantment-exploration.cost0"), EnchantmentExploration.getConfig().getCost0())
                 .setDefaultValue(defaultConfig.getCost0())
                 .setTooltip(Text.translatable("tooltip.enchantment-exploration.cost0"))
@@ -52,6 +72,16 @@ public class ClothConfigScreenFactory {
                 .setDefaultValue(defaultConfig.shouldRemoveBookAnvilCombination())
                 .setTooltip(Text.translatable("tooltip.enchantment-exploration.anvil.book.enabled"))
                 .setSaveConsumer(newValue -> EnchantmentExploration.getConfig().setRemoveBookAnvilCombination(newValue))
+                .build());
+        anvil.addEntry(entryBuilder.startBooleanToggle(Text.translatable("option.enchantment-exploration.anvil.combine.enabled"), EnchantmentExploration.getConfig().shouldAnvilCombineBookUpgrade())
+                .setDefaultValue(defaultConfig.shouldAnvilCombineBookUpgrade())
+                .setTooltip(Text.translatable("tooltip.enchantment-exploration.anvil.combine.enabled"))
+                .setSaveConsumer(newValue -> EnchantmentExploration.getConfig().setAnvilCombineBookUpgrade(newValue))
+                .build());
+        anvil.addEntry(entryBuilder.startStrList(Text.translatable("option.enchantment-exploration.anvil.upgrade-materials"), EnchantmentExploration.getConfig().getAnvilBookUpgradeItems())
+                .setDefaultValue(defaultConfig.getAnvilBookUpgradeItems())
+                .setTooltip(Text.translatable("tooltip.enchantment-exploration.anvil.upgrade-materials"))
+                .setSaveConsumer(newValue -> EnchantmentExploration.getConfig().setAnvilBookUpgradeItems(newValue))
                 .build());
         anvil.addEntry(entryBuilder.startBooleanToggle(Text.translatable("option.enchantment-exploration.anvil.vanilla-materials.disabled"), EnchantmentExploration.getConfig().doDefaultRepairMaterialsWork())
                 .setDefaultValue(defaultConfig.doDefaultRepairMaterialsWork())
