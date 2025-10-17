@@ -1,8 +1,8 @@
-package net.falsetm.mixin;
+package net.falsetm.enchantment_exploration.mixin;
 
 import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
 import com.llamalad7.mixinextras.injector.wrapoperation.WrapOperation;
-import net.falsetm.events.IsAccessPowerProviderCallback;
+import net.falsetm.enchantment_exploration.events.IsAccessPowerProviderCallback;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.EnchantingTableBlock;
 import net.minecraft.registry.tag.TagKey;

@@ -1,11 +1,10 @@
-package net.falsetm.mixin;
+package net.falsetm.enchantment_exploration.mixin;
 
 import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
 import com.llamalad7.mixinextras.injector.wrapoperation.WrapOperation;
-import net.falsetm.EnchantmentExploration;
-import net.falsetm.events.AnvilScreenHandlerUpdateResultCallback;
-import net.falsetm.events.AnvilScreenTakeOutputNoRepairClearSecondCallback;
-import net.falsetm.events.AnvilScreenUpdateResultGetSecondInputCallback;
+import net.falsetm.enchantment_exploration.events.AnvilScreenHandlerUpdateResultCallback;
+import net.falsetm.enchantment_exploration.events.AnvilScreenTakeOutputNoRepairClearSecondCallback;
+import net.falsetm.enchantment_exploration.events.AnvilScreenUpdateResultGetSecondInputCallback;
 import net.minecraft.inventory.Inventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.screen.AnvilScreenHandler;

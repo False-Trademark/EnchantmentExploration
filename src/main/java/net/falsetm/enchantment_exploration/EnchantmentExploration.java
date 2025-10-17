@@ -1,13 +1,13 @@
-package net.falsetm;
+package net.falsetm.enchantment_exploration;
 
 import net.fabricmc.api.ModInitializer;
 
-import net.falsetm.config.EnchantmentExplorationConfig;
-import net.falsetm.events.*;
-import net.falsetm.mixin.EnchantmentScreenHandlerAccessor;
-import net.falsetm.mixin_ducks.EnchantmentHandlerDuck;
-import net.falsetm.mixin_ducks.LootTableDuck;
-import net.falsetm.util.EnchantmentHelper;
+import net.falsetm.enchantment_exploration.config.EnchantmentExplorationConfig;
+import net.falsetm.enchantment_exploration.events.*;
+import net.falsetm.enchantment_exploration.mixin.EnchantmentScreenHandlerAccessor;
+import net.falsetm.enchantment_exploration.mixin_ducks.EnchantmentHandlerDuck;
+import net.falsetm.enchantment_exploration.mixin_ducks.LootTableDuck;
+import net.falsetm.enchantment_exploration.util.EnchantmentHelper;
 import net.minecraft.block.Blocks;
 import net.minecraft.block.EnchantingTableBlock;
 import net.minecraft.block.entity.BlockEntityType;

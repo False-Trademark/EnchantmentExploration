@@ -1,14 +1,14 @@
 {
 	"required": true,
-	"package": "net.falsetm.mixin",
+	"package": "net.falsetm.enchantment_exploration.mixin",
 	"compatibilityLevel": "JAVA_21",
 	"mixins": [
 		"EnchantmentScreenHandlerMixin",
-		"EnchantingTableBlockMixin",
-		"EnchantmentScreenHandlerAccessor",
-		"AnvilScreenHandlerMixin",
-		"ItemStackMixin",
-		"LootTableMixin"
+      	"EnchantingTableBlockMixin",
+      	"EnchantmentScreenHandlerAccessor",
+      	"AnvilScreenHandlerMixin",
+      	"ItemStackMixin",
+      	"LootTableMixin"
 	],
 	"injectors": {
 		"defaultRequire": 1

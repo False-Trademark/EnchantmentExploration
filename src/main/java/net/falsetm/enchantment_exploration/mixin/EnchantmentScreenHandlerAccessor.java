@@ -1,4 +1,4 @@
-package net.falsetm.mixin;
+package net.falsetm.enchantment_exploration.mixin;
 
 import net.minecraft.screen.EnchantmentScreenHandler;
 import net.minecraft.util.math.random.Random;

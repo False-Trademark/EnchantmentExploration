@@ -1,10 +1,9 @@
-package net.falsetm.events;
+package net.falsetm.enchantment_exploration.events;
 
 import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
 import net.fabricmc.fabric.api.event.Event;
 import net.fabricmc.fabric.api.event.EventFactory;
 import net.minecraft.item.ItemStack;
-import net.minecraft.loot.LootPool;
 import net.minecraft.loot.LootTable;
 import net.minecraft.loot.context.LootContext;
 import org.jetbrains.annotations.Nullable;

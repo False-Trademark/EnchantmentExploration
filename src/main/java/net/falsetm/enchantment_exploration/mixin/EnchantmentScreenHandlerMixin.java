@@ -1,11 +1,11 @@
-package net.falsetm.mixin;
+package net.falsetm.enchantment_exploration.mixin;
 
 import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
 import com.llamalad7.mixinextras.injector.wrapoperation.WrapOperation;
-import net.falsetm.events.EnchantmentScreenHandlerApplyCostCallback;
-import net.falsetm.events.GenerateEnchantCallback;
-import net.falsetm.events.EnchantmentContentChangedCallback;
-import net.falsetm.mixin_ducks.EnchantmentHandlerDuck;
+import net.falsetm.enchantment_exploration.events.EnchantmentScreenHandlerApplyCostCallback;
+import net.falsetm.enchantment_exploration.events.GenerateEnchantCallback;
+import net.falsetm.enchantment_exploration.events.EnchantmentContentChangedCallback;
+import net.falsetm.enchantment_exploration.mixin_ducks.EnchantmentHandlerDuck;
 import net.minecraft.enchantment.EnchantmentLevelEntry;
 import net.minecraft.item.ItemStack;
 import net.minecraft.registry.DynamicRegistryManager;

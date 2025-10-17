@@ -1,4 +1,4 @@
-package net.falsetm.config;
+package net.falsetm.enchantment_exploration.config;
 
 import java.io.BufferedWriter;
 import java.io.Reader;
@@ -11,7 +11,7 @@ import java.util.concurrent.CompletionException;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import net.fabricmc.loader.api.FabricLoader;
-import net.falsetm.EnchantmentExploration;
+import net.falsetm.enchantment_exploration.EnchantmentExploration;
 import org.jetbrains.annotations.Nullable;
 
 /**

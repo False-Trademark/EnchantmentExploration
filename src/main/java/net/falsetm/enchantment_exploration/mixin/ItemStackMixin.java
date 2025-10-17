@@ -1,6 +1,6 @@
-package net.falsetm.mixin;
+package net.falsetm.enchantment_exploration.mixin;
 
-import net.falsetm.events.ItemStackCanRepairWithCallback;
+import net.falsetm.enchantment_exploration.events.ItemStackCanRepairWithCallback;
 import net.minecraft.item.ItemStack;
 import org.jetbrains.annotations.Nullable;
 import org.spongepowered.asm.mixin.Mixin;

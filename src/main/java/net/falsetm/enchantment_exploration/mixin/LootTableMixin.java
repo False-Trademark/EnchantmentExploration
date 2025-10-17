@@ -1,10 +1,10 @@
-package net.falsetm.mixin;
+package net.falsetm.enchantment_exploration.mixin;
 
 import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
 import com.llamalad7.mixinextras.injector.wrapoperation.WrapOperation;
-import net.falsetm.events.LootTableApplyFunctionsCallback;
-import net.falsetm.events.LootTableFinishGenerateUnprocessedCallback;
-import net.falsetm.mixin_ducks.LootTableDuck;
+import net.falsetm.enchantment_exploration.events.LootTableApplyFunctionsCallback;
+import net.falsetm.enchantment_exploration.events.LootTableFinishGenerateUnprocessedCallback;
+import net.falsetm.enchantment_exploration.mixin_ducks.LootTableDuck;
 import net.minecraft.item.ItemStack;
 import net.minecraft.loot.LootTable;
 import net.minecraft.loot.context.LootContext;

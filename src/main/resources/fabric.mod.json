@@ -20,7 +20,7 @@
 	"environment": "*",
 	"entrypoints": {
 		"main": [
-          "net.falsetm.EnchantmentExploration"
+			"net.falsetm.enchantment_exploration.EnchantmentExploration"
 		],
 		"modmenu": [
 			"net.falsetm.enchantment_exploration.ModMenuIntegration"

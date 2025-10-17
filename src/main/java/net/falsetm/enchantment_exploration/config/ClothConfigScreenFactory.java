@@ -1,9 +1,9 @@
-package net.falsetm.config;
+package net.falsetm.enchantment_exploration.config;
 
 import me.shedaniel.clothconfig2.api.ConfigBuilder;
 import me.shedaniel.clothconfig2.api.ConfigCategory;
 import me.shedaniel.clothconfig2.api.ConfigEntryBuilder;
-import net.falsetm.EnchantmentExploration;
+import net.falsetm.enchantment_exploration.EnchantmentExploration;
 import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.text.Text;
 import net.minecraft.util.Formatting;

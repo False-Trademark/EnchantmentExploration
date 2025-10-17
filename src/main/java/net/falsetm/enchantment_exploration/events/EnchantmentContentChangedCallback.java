@@ -1,4 +1,4 @@
-package net.falsetm.events;
+package net.falsetm.enchantment_exploration.events;
 
 import net.fabricmc.fabric.api.event.Event;
 import net.fabricmc.fabric.api.event.EventFactory;
