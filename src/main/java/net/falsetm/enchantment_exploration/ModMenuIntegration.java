@@ -1,8 +1,9 @@
-package net.falsetm.config;
+package net.falsetm.enchantment_exploration;
 
 import com.terraformersmc.modmenu.api.ConfigScreenFactory;
 import com.terraformersmc.modmenu.api.ModMenuApi;
 import net.fabricmc.loader.api.FabricLoader;
+import net.falsetm.config.ClothConfigScreenFactory;
 
 public class ModMenuIntegration implements ModMenuApi
 {
